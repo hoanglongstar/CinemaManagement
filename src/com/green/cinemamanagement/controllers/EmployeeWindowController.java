@@ -52,23 +52,17 @@ public class EmployeeWindowController extends BaseController implements Initiali
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-//        DBDAO dbdao = new DBDAO();
-//
-//
-//
-//        ObservableList<Employee> data = FXCollections.observableArrayList(dbdao.employeeInfo(viewFactory.getDbManager().getDBConnection()));
-//
-//
-//
-//        System.out.println(data.get(0).getFullname());
-//
-//
-//
-//        columnID.setCellValueFactory(new PropertyValueFactory<>("id"));
-//        columnFullname.setCellValueFactory(new PropertyValueFactory<>("fullname"));
-//        columnPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-//        columnPosition.setCellValueFactory(new PropertyValueFactory<>("position"));
-//        tableViewStaff.setEditable(true);
-//        tableViewStaff.setItems(data);
+        DBDAO dbdao = new DBDAO();
+
+        ObservableList<Employee> data = FXCollections.observableArrayList(dbdao.employeeInfo(viewFactory.getDbManager().getDBConnection()));
+
+        System.out.println(data.get(0).getFullname());
+
+        columnID.setCellValueFactory(new PropertyValueFactory<>("id"));
+        columnFullname.setCellValueFactory(new PropertyValueFactory<>("fullname"));
+        columnPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        columnPosition.setCellValueFactory(new PropertyValueFactory<>("position"));
+        tableViewStaff.setEditable(true);
+        tableViewStaff.setItems(data);
     }
 }
