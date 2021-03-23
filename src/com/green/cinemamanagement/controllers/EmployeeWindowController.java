@@ -41,8 +41,9 @@ public class EmployeeWindowController extends BaseController implements Initiali
 
     @FXML
     void buttonAddClicked(ActionEvent event) {
-        DBDAO dbdao = new DBDAO();
-        dbdao.insertStaff(viewFactory.getDbManager().getDBConnection(), "abc","0199999","manager");
+//        DBDAO dbdao = new DBDAO();
+//        dbdao.insertStaff(viewFactory.getDbManager().getDBConnection(), "abc","0199999","manager");
+        viewFactory.showAddEmployeeWindow();
     }
 
     public EmployeeWindowController(ViewFactory viewFactory, String fxmlName) {
@@ -51,26 +52,23 @@ public class EmployeeWindowController extends BaseController implements Initiali
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        DBDAO dbdao = new DBDAO();
-
-//        Connection connection = new DBConnector().getDBConnection();
-//        ArrayList<Staff> staffArrayList = dao.staffInfo(connection);
-
-        ObservableList<Employee> data = FXCollections.observableArrayList(dbdao.employeeInfo(viewFactory.getDbManager().getDBConnection()));
-
-//        System.out.println(staffArrayList.get(0).getFullname());
-
-//        Staff staff = new Staff("1","aaa","0123","staff");
-
-        System.out.println(data.get(0).getFullname());
-
-//        columnID.setCellFactory(new TableColumn<>());
-
-        columnID.setCellValueFactory(new PropertyValueFactory<>("id"));
-        columnFullname.setCellValueFactory(new PropertyValueFactory<>("fullname"));
-        columnPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-        columnPosition.setCellValueFactory(new PropertyValueFactory<>("position"));
-        tableViewStaff.setEditable(true);
-        tableViewStaff.setItems(data);
+//        DBDAO dbdao = new DBDAO();
+//
+//
+//
+//        ObservableList<Employee> data = FXCollections.observableArrayList(dbdao.employeeInfo(viewFactory.getDbManager().getDBConnection()));
+//
+//
+//
+//        System.out.println(data.get(0).getFullname());
+//
+//
+//
+//        columnID.setCellValueFactory(new PropertyValueFactory<>("id"));
+//        columnFullname.setCellValueFactory(new PropertyValueFactory<>("fullname"));
+//        columnPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+//        columnPosition.setCellValueFactory(new PropertyValueFactory<>("position"));
+//        tableViewStaff.setEditable(true);
+//        tableViewStaff.setItems(data);
     }
 }

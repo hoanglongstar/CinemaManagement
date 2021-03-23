@@ -52,9 +52,14 @@ public class ViewFactory {
         initializeStage(controller,true);
     }
 
-    public void showStaffWindow(){
+    public void showEmployeeWindow(){
         BaseController controller = new EmployeeWindowController(this, "EmployeesWindow.fxml");
         initializeStage(controller);
+    }
+
+    public void showAddEmployeeWindow(){
+        BaseController controller = new AddEmployeeController(this, "AddEmployeeWindow.fxml");
+        initializeStage(controller,true);
     }
 
     public void closeStage(Stage stage){
