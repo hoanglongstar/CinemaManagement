@@ -14,15 +14,16 @@
                 <Font size="24.0" />
             </font>
         </Label>
-        <TableView fx:id="tableViewStaff" layoutX="10.0" layoutY="46.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="46.0">
+        <TableView fx:id="tableViewEmployee" layoutX="10.0" layoutY="46.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="46.0">
             <columns>
                 <TableColumn fx:id="columnID" prefWidth="32.0" text="id" />
                 <TableColumn fx:id="columnFullname" prefWidth="117.0" text="Fullname" />
                 <TableColumn fx:id="columnPhoneNumber" prefWidth="105.0" text="Phone Number" />
                 <TableColumn fx:id="columnPosition" prefWidth="112.0" text="Position" />
-                <TableColumn fx:id="columnEmail" prefWidth="213.0" text="Email" />
+                <TableColumn fx:id="columnSelect" prefWidth="213.0" text="Select" />
             </columns>
         </TableView>
         <Button fx:id="buttonAdd" mnemonicParsing="false" onAction="#buttonAddClicked" prefWidth="80.0" text="Add" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+      <Button fx:id="buttonRefresh" disable="true" layoutX="520.0" layoutY="375.0" mnemonicParsing="false" onAction="#buttonRefreshClicked" prefWidth="80.0" text="Refresh" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="100.0" />
     </children>
 </AnchorPane>

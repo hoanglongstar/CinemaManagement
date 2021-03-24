@@ -1,5 +1,6 @@
 package com.green.cinemamanagement.controllers;
 
+import com.green.cinemamanagement.dbhelper.DBDAO;
 import com.green.cinemamanagement.views.ViewFactory;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -24,6 +25,8 @@ public class AddEmployeeController extends BaseController{
     @FXML
     private Button buttonOK;
 
+    private static Boolean windowIsClosed = false;
+
     @FXML
     void buttonCancelClicked(ActionEvent event) {
         Stage stage = (Stage) buttonCancel.getScene().getWindow();
@@ -33,12 +36,19 @@ public class AddEmployeeController extends BaseController{
     @FXML
     void buttonOKClicked(ActionEvent event) {
 
+        DBDAO dbdao = new DBDAO();
+        dbdao.insertEmployee(viewFactory.getDbManager().getDBConnection(), textFieldFullname.getText(), textFieldPhoneNumber.getText(), textFieldPosition.getText());
+        windowIsClosed = true;
         Stage stage = (Stage) buttonCancel.getScene().getWindow();
         viewFactory.closeStage(stage);
     }
 
     public AddEmployeeController(ViewFactory viewFactory, String fxmlName) {
         super(viewFactory, fxmlName);
+    }
+
+    public static Boolean getWindowIsClosed(){
+        return windowIsClosed;
     }
 
 }

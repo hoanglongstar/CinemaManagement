@@ -1,7 +1,6 @@
 package com.green.cinemamanagement.controllers;
 
 import com.green.cinemamanagement.dbhelper.DBDAO;
-import com.green.cinemamanagement.manager.DBManager;
 import com.green.cinemamanagement.models.UserInfo;
 import com.green.cinemamanagement.views.ViewFactory;
 import javafx.event.ActionEvent;
@@ -10,8 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
-import java.sql.Connection;
 
 public class LoginWindowController  extends BaseController{
     @FXML
