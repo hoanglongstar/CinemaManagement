@@ -57,13 +57,39 @@ public class ViewFactory {
         initializeStage(controller);
     }
 
-    public void showAddEmployeeWindow(){
-        BaseController controller = new AddEmployeeController(this, "AddEmployeeWindow.fxml");
-        initializeStage(controller,true);
+    public boolean showAddEmployeeWindow(){
+        AddEmployeeController controller = new AddEmployeeController(this, "AddEmployeeWindow.fxml");
+        initializeStage(controller,true,true);
+        System.out.println(controller.getWindowIsClosed());
+        return controller.getWindowIsClosed();
     }
 
     public void closeStage(Stage stage){
         stage.close();
+    }
+
+    private void initializeStage(BaseController controller,Boolean isModal, Boolean isConfirmed){
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(controller.getFxmlName()));
+        fxmlLoader.setController(controller);
+
+        Parent parent = null;
+        try {
+            parent = fxmlLoader.load();
+        } catch (IOException e) {
+            System.out.println("initializeStage: failed to load fxml");
+            e.printStackTrace();
+            return;
+        }
+
+        Scene scene = new Scene(parent);
+        Stage stage = new Stage();
+        if(isModal){
+            stage.initModality(Modality.APPLICATION_MODAL);
+        }
+        stage.setScene(scene);
+        if(isConfirmed){
+            stage.showAndWait();
+        }
     }
 
     private void initializeStage(BaseController controller){

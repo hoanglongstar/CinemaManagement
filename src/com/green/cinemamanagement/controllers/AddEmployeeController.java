@@ -31,6 +31,7 @@ public class AddEmployeeController extends BaseController{
     void buttonCancelClicked(ActionEvent event) {
         Stage stage = (Stage) buttonCancel.getScene().getWindow();
         viewFactory.closeStage(stage);
+        windowIsClosed = false;
     }
 
     @FXML
@@ -45,6 +46,7 @@ public class AddEmployeeController extends BaseController{
 
     public AddEmployeeController(ViewFactory viewFactory, String fxmlName) {
         super(viewFactory, fxmlName);
+        getWindowIsClosed();
     }
 
     public static Boolean getWindowIsClosed(){
