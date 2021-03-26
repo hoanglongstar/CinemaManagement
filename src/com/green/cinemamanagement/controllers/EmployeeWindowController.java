@@ -2,9 +2,7 @@ package com.green.cinemamanagement.controllers;
 
 import com.green.cinemamanagement.dbhelper.DBDAO;
 import com.green.cinemamanagement.models.Employee;
-import com.green.cinemamanagement.views.EditingCell;
 import com.green.cinemamanagement.views.ViewFactory;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,10 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellEditEvent;
-import javafx.util.Callback;
-import javafx.util.StringConverter;
-import javafx.util.converter.IntegerStringConverter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -50,46 +44,33 @@ public class EmployeeWindowController extends BaseController implements Initiali
     private Button buttonAdd;
 
     @FXML
-    private Button buttonRefresh;
+    private Button buttonDelete;
 
 
 
     @FXML
     void buttonAddClicked(ActionEvent event) {
 
-//        ViewFactory vFactory = viewFactory.showAddEmployeeWindow();
         Boolean addEmployee = viewFactory.showAddEmployeeWindow();
         if(addEmployee){
             data.setAll(dbdao.employeeInfo(viewFactory.getDbManager().getDBConnection()));
         }
-
-
     }
 
     @FXML
-    void buttonRefreshClicked(ActionEvent event) {
-//        for(Employee name : data){
-//            System.out.println(name.getFullname());
-//        }
-//        if(AddEmployeeController.getWindowIsClosed()){
-//            printDataFromDBToTableView();
-//        }
+    void buttonDeleteClicked(ActionEvent event) {
 
-//        data.setAll(dbdao.employeeInfo(viewFactory.getDbManager().getDBConnection()));
-//        System.out.println(data.get(data.size()-1).getFullname());
+        ObservableList<Employee> employeeRemoveList = FXCollections.observableArrayList();
+
+        for(Employee emp : data){
+            if(emp.getSelect().isSelected()){
+                employeeRemoveList.add(emp);
+                dbdao.deleteEmployee(viewFactory.getDbManager().getDBConnection(), emp.getId());
+            }
+        }
+        data.removeAll(employeeRemoveList);
+
     }
-
-//    private Boolean checkBoxIsSelected(){
-//        Boolean isSelected = false;
-//
-//        for (int i = 0; i < data.size(); i++){
-//            if(data.get(i).getSelect().isSelected()){
-//                isSelected = true;
-//            }
-//        }
-//
-//        return isSelected;
-//    }
 
     public EmployeeWindowController(ViewFactory viewFactory, String fxmlName) {
         super(viewFactory, fxmlName);
@@ -98,33 +79,13 @@ public class EmployeeWindowController extends BaseController implements Initiali
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        buttonRefresh.setDisable(false);
-
-//        DBDAO dbdao = new DBDAO();
-
         data.setAll(dbdao.employeeInfo(viewFactory.getDbManager().getDBConnection()));
 
-//        data = FXCollections.observableArrayList(dbdao.employeeInfo(viewFactory.getDbManager().getDBConnection()));
-
-//        if(checkBoxIsSelected() == true){
-//            buttonDelete.setDisable(false);
-//        }
-//        for (int i = 0; i < data.size(); i++){
-//            data
-//        }
-
-
-
-
-//        System.out.println("initialize");
-
-//        columnID.setCellValueFactory(new PropertyValueFactory<>("id"));
-//        columnFullname.setCellValueFactory(new PropertyValueFactory<>("fullname"));
-//        columnPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-//        columnPosition.setCellValueFactory(new PropertyValueFactory<>("position"));
-//        columnSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
-//        tableViewEmployee.setEditable(true);
-//        tableViewEmployee.setItems(data);
+        for(Employee emp : data){
+            if(emp.getSelect().isSelected()){
+                System.out.println("selected checkbox");
+            }
+        }
 
         printDataFromDBToTableView();
 
@@ -136,29 +97,71 @@ public class EmployeeWindowController extends BaseController implements Initiali
         tableViewEmployee.setEditable(true);
 
 
-        columnID.setCellValueFactory(new PropertyValueFactory<Employee, Integer>("id"));
-        columnID.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        columnID.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Employee, Integer>>() {
-            @Override
-            public void handle(TableColumn.CellEditEvent<Employee, Integer> employeeIntegerCellEditEvent) {
-                ((Employee) employeeIntegerCellEditEvent.getTableView().getItems().get(employeeIntegerCellEditEvent.getTablePosition().getRow())).setID(employeeIntegerCellEditEvent.getNewValue());
-                //Viet them ham update tren DAO Class
-            }
-        });
+        columnID.setCellValueFactory(new PropertyValueFactory<>("id"));
 
         columnFullname.setCellValueFactory(new PropertyValueFactory<>("fullname"));
-//        columnFullname.setCellFactory(cellFactory);
-//        columnFullname.setOnEditCommit(new EventHandler<CellEditEvent<Employee, String>>() {
-//            @Override
-//            public void handle(CellEditEvent<Employee, String> employeeStringCellEditEvent) {
-//                ((Employee) employeeStringCellEditEvent.getTableView().getItems().get(employeeStringCellEditEvent.getTablePosition().getRow())).setFullname(employeeStringCellEditEvent.getNewValue());
-//            }
-//        });
+        editFullnameCell();
 
         columnPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        editPhoneNumberCell();
+
         columnPosition.setCellValueFactory(new PropertyValueFactory<>("position"));
+        editPositionCell();
+
         columnSelect.setCellValueFactory(new PropertyValueFactory<>("select"));
 
+
         tableViewEmployee.setItems(data);
+    }
+
+    private void editPositionCell (){
+        columnPosition.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnPosition.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Employee, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Employee, String> cellEditing) {
+                ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).setPosition(cellEditing.getNewValue());
+
+                dbdao.updateEmployeeInfo(viewFactory.getDbManager().getDBConnection(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getId(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getFullname(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPhoneNumber(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPosition()
+                );
+            }
+        });
+    }
+
+    private void editPhoneNumberCell (){
+        columnPhoneNumber.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnPhoneNumber.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Employee, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Employee, String> cellEditing) {
+                ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).setPhoneNumber(cellEditing.getNewValue());
+
+                dbdao.updateEmployeeInfo(viewFactory.getDbManager().getDBConnection(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getId(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getFullname(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPhoneNumber(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPosition()
+                );
+            }
+        });
+    }
+
+    private void editFullnameCell (){
+        columnFullname.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnFullname.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Employee, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Employee, String> cellEditing) {
+                ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).setFullname(cellEditing.getNewValue());
+
+                dbdao.updateEmployeeInfo(viewFactory.getDbManager().getDBConnection(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getId(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getFullname(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPhoneNumber(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPosition()
+                );
+            }
+        });
     }
 }

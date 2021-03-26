@@ -2,8 +2,6 @@ package com.green.cinemamanagement.dbhelper;
 
 import com.green.cinemamanagement.models.Employee;
 import com.green.cinemamanagement.models.UserInfo;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
 
 import java.sql.*;
@@ -11,16 +9,15 @@ import java.util.ArrayList;
 
 public class DBDAO {
 
-    private final ObservableList<Employee> employees = FXCollections.observableArrayList();
+//    private final ObservableList<Employee> employees = FXCollections.observableArrayList();
 
     private static final String QUERY_USER_INFO = "SELECT * FROM USER";
-    private static final String INSERT_STAFF = "INSERT INTO USER(FULLNAME, PHONENUMBER, POSITION) VALUES (?,?,?)";
-
-//    public DBDAO(ObservableList<Employee> employees) {
-//        this.employees = employees;
-//    }
+    private static final String INSERT_EMPLOYEE = "INSERT INTO USER(FULLNAME, PHONENUMBER, POSITION) VALUES (?,?,?)";
+    private static final String UPDATE_EMPLOYEE_INFO = "UPDATE USER SET FULLNAME = ?, PHONENUMBER = ?, POSITION = ? " + "WHERE ID = ? ";
+    private static final String DELETE_EMPLOYEE = "DELETE FROM USER WHERE ID = ?";
 
     public Boolean checkUserInfo(Connection connection, UserInfo userInfo){
+
         Statement statement = null;
         Boolean logInSuccess = false;
         try {
@@ -42,8 +39,9 @@ public class DBDAO {
         return logInSuccess;
     }
 
-    public ObservableList<Employee> employeeInfo(Connection connection){
-//        employees = new ArrayList<>();
+    public ArrayList<Employee> employeeInfo(Connection connection){
+
+        ArrayList <Employee> employees = new ArrayList<>();
 
         Statement statement = null;
 
@@ -62,22 +60,44 @@ public class DBDAO {
     }
 
     public void insertEmployee(Connection connection, String fullname, String phoneNumber, String position){
+
         PreparedStatement preparedStatement = null;
-//        System.out.println(employees.size());
+
         try {
-            preparedStatement = connection.prepareStatement(INSERT_STAFF);
+            preparedStatement = connection.prepareStatement(INSERT_EMPLOYEE);
             preparedStatement.setString(1, fullname);
             preparedStatement.setString(2, phoneNumber);
             preparedStatement.setString(3, position);
             preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 
-            employees.add(new Employee(employees.size(),fullname,phoneNumber,position,new CheckBox()));
+    public void updateEmployeeInfo(Connection connection, int id, String fullname, String phoneNumber, String position){
 
-//            System.out.println(employees.get(employees.size()-1).getFullname());
-//            for(Employee name : employees){
-//                System.out.println(name.getFullname());
-//            }
+        PreparedStatement preparedStatement = null;
 
+        try {
+            preparedStatement = connection.prepareStatement(UPDATE_EMPLOYEE_INFO);
+            preparedStatement.setString(1, fullname);
+            preparedStatement.setString(2, phoneNumber);
+            preparedStatement.setString(3, position);
+            preparedStatement.setInt(4, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void deleteEmployee(Connection connection, int id){
+
+        PreparedStatement preparedStatement = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(DELETE_EMPLOYEE);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
