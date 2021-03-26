@@ -81,12 +81,6 @@ public class EmployeeWindowController extends BaseController implements Initiali
 
         data.setAll(dbdao.employeeInfo(viewFactory.getDbManager().getDBConnection()));
 
-        for(Employee emp : data){
-            if(emp.getSelect().isSelected()){
-                System.out.println("selected checkbox");
-            }
-        }
-
         printDataFromDBToTableView();
 
         System.out.println("changed");
