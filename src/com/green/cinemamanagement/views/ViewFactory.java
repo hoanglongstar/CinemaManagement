@@ -57,6 +57,11 @@ public class ViewFactory {
         initializeStage(controller);
     }
 
+    public void showMoviesWindow(){
+        BaseController controller = new MoviesWindowController(this,"MoviesWindow.fxml");
+        initializeStage(controller);
+    }
+
     public boolean showAddEmployeeWindow(){
         AddEmployeeController controller = new AddEmployeeController(this, "AddEmployeeWindow.fxml");
         initializeStage(controller,true,true);

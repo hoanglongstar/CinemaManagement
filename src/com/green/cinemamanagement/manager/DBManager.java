@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DBManager {
 
     private static final String DB_Driver = "com.mysql.cj.jdbc.Driver";
-    private static final String DB_CONNECTION = "jdbc:mysql://localhost/userinformation?user=root&password=123456";
+    private static final String DB_CONNECTION = "jdbc:mysql://localhost/cinemamanagement?user=root&password=123456";
 
     public DBManager(){
 

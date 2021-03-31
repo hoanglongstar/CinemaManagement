@@ -1,6 +1,7 @@
 package com.green.cinemamanagement.controllers;
 
-import com.green.cinemamanagement.dbhelper.DBDAO;
+import com.green.cinemamanagement.dbhelper.EmployeeDAO;
+import com.green.cinemamanagement.dbhelper.UserLoginDAO;
 import com.green.cinemamanagement.models.UserInfo;
 import com.green.cinemamanagement.views.ViewFactory;
 import javafx.event.ActionEvent;
@@ -34,9 +35,9 @@ public class LoginWindowController  extends BaseController{
 
         UserInfo userInfo = new UserInfo(textFieldEmail.getText(), textFieldPassword.getText());
 
-        DBDAO dbdao = new DBDAO();
+        UserLoginDAO userLoginDAO = new UserLoginDAO();
 
-        if(dbdao.checkUserInfo(viewFactory.getDbManager().getDBConnection(), userInfo)){
+        if(userLoginDAO.checkUserInfo(viewFactory.getDbManager().getDBConnection(), userInfo)){
             viewFactory.showMainWindow();
             Stage stage = (Stage) buttonLogin.getScene().getWindow();
             viewFactory.closeStage(stage);

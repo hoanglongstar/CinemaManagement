@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="10.0" layoutY="10.0" text="Movies List" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TableView fx:id="tableViewMovies" layoutX="20.0" layoutY="56.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="46.0">
+         <columns>
+            <TableColumn fx:id="columnIDMovie" prefWidth="32.0" text="ID" />
+            <TableColumn fx:id="columnTitle" prefWidth="117.0" text="Title" />
+            <TableColumn fx:id="columnGenre" prefWidth="105.0" text="Genre" />
+            <TableColumn fx:id="columnReleaseDate" prefWidth="105.0" text="Release Date" />
+            <TableColumn fx:id="columnRunningTime" prefWidth="112.0" text="Running Time" />
+            <TableColumn fx:id="columnSelectMovie" prefWidth="108.0" text="Select" />
+         </columns>
+      </TableView>
+      <Button fx:id="buttonAdd" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" onAction="#buttonAddMovieClicked" prefWidth="80.0" text="Add" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0" />
+      <Button fx:id="buttonDelete" layoutX="530.0" layoutY="385.0" mnemonicParsing="false" onAction="#buttonDeleteMovieClicked" prefWidth="80.0" text="Delete" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="100.0" />
+   </children>
+</AnchorPane>

@@ -23,7 +23,7 @@
          </font>
       </Label>
       <TextField fx:id="textFieldFullname" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="95.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="90.0" text="Phone Number" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="120.0">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="90.0" text="Date of Birth" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="120.0">
          <padding>
             <Insets left="20.0" top="20.0" />
          </padding>
@@ -31,8 +31,8 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="textFieldPhoneNumber" layoutX="210.0" layoutY="105.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="135.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="130.0" text="Position" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="160.0">
+      <TextField fx:id="textFieldDateOfBirth" layoutX="210.0" layoutY="105.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="135.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="130.0" text="Address" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="160.0">
          <padding>
             <Insets left="20.0" top="20.0" />
          </padding>
@@ -40,7 +40,16 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="textFieldPosition" layoutX="210.0" layoutY="145.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="175.0" />
+      <TextField fx:id="textFieldAddress" layoutX="210.0" layoutY="145.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="175.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="60.0" layoutY="130.0" text="Position" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="200.0">
+         <padding>
+            <Insets left="20.0" top="20.0" />
+         </padding>
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <TextField fx:id="textFieldPosition" layoutX="210.0" layoutY="145.0" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="215.0" />
       <Button fx:id="buttonCancel" mnemonicParsing="false" onAction="#buttonCancelClicked" prefWidth="60.0" text="Cancel" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="50.0" />
       <Button fx:id="buttonOK" layoutX="400.0" layoutY="263.0" mnemonicParsing="false" onAction="#buttonOKClicked" prefWidth="60.0" text="OK" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="120.0" />
    </children>

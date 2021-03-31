@@ -1,6 +1,6 @@
 package com.green.cinemamanagement.controllers;
 
-import com.green.cinemamanagement.dbhelper.DBDAO;
+import com.green.cinemamanagement.dbhelper.EmployeeDAO;
 import com.green.cinemamanagement.models.Employee;
 import com.green.cinemamanagement.views.ViewFactory;
 import javafx.collections.FXCollections;
@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 public class EmployeeWindowController extends BaseController implements Initializable {
 
     private ObservableList<Employee> data = FXCollections.observableArrayList();
-    private DBDAO dbdao = new DBDAO();
+    private EmployeeDAO employeeDAO = new EmployeeDAO();
 
     @FXML
     private TableView<Employee> tableViewEmployee;
@@ -32,7 +32,10 @@ public class EmployeeWindowController extends BaseController implements Initiali
     private TableColumn<Employee, String> columnFullname;
 
     @FXML
-    private TableColumn<Employee, String> columnPhoneNumber;
+    private TableColumn<Employee, String> columnDateOfBirth;
+
+    @FXML
+    private TableColumn<Employee, String> columnAddress;
 
     @FXML
     private TableColumn<Employee, String> columnPosition;
@@ -53,7 +56,7 @@ public class EmployeeWindowController extends BaseController implements Initiali
 
         Boolean addEmployee = viewFactory.showAddEmployeeWindow();
         if(addEmployee){
-            data.setAll(dbdao.employeeInfo(viewFactory.getDbManager().getDBConnection()));
+            data.setAll(employeeDAO.employeeInfo(viewFactory.getDbManager().getDBConnection()));
         }
     }
 
@@ -65,7 +68,7 @@ public class EmployeeWindowController extends BaseController implements Initiali
         for(Employee emp : data){
             if(emp.getSelect().isSelected()){
                 employeeRemoveList.add(emp);
-                dbdao.deleteEmployee(viewFactory.getDbManager().getDBConnection(), emp.getId());
+                employeeDAO.deleteEmployee(viewFactory.getDbManager().getDBConnection(), emp.getId());
             }
         }
         data.removeAll(employeeRemoveList);
@@ -79,25 +82,28 @@ public class EmployeeWindowController extends BaseController implements Initiali
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        data.setAll(dbdao.employeeInfo(viewFactory.getDbManager().getDBConnection()));
+            data.setAll(employeeDAO.employeeInfo(viewFactory.getDbManager().getDBConnection()));
 
-        printDataFromDBToTableView();
+            printDataFromDBToTableView();
 
-        System.out.println("changed");
+            System.out.println(data.get(0).getAddress());
+            System.out.println("changed");
     }
 
     private void printDataFromDBToTableView(){
 
         tableViewEmployee.setEditable(true);
 
-
         columnID.setCellValueFactory(new PropertyValueFactory<>("id"));
 
         columnFullname.setCellValueFactory(new PropertyValueFactory<>("fullname"));
         editFullnameCell();
 
-        columnPhoneNumber.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-        editPhoneNumberCell();
+        columnDateOfBirth.setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
+        editDateOfBirthCell();
+
+        columnAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
+        editAddressCell();
 
         columnPosition.setCellValueFactory(new PropertyValueFactory<>("position"));
         editPositionCell();
@@ -115,27 +121,47 @@ public class EmployeeWindowController extends BaseController implements Initiali
             public void handle(TableColumn.CellEditEvent<Employee, String> cellEditing) {
                 ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).setPosition(cellEditing.getNewValue());
 
-                dbdao.updateEmployeeInfo(viewFactory.getDbManager().getDBConnection(),
+                employeeDAO.updateEmployeeInfo(viewFactory.getDbManager().getDBConnection(),
                         ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getId(),
                         ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getFullname(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPhoneNumber(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getDateOfBirth(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getAddress(),
                         ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPosition()
                 );
             }
         });
     }
 
-    private void editPhoneNumberCell (){
-        columnPhoneNumber.setCellFactory(TextFieldTableCell.forTableColumn());
-        columnPhoneNumber.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Employee, String>>() {
+    private void editDateOfBirthCell(){
+        columnDateOfBirth.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnDateOfBirth.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Employee, String>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<Employee, String> cellEditing) {
-                ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).setPhoneNumber(cellEditing.getNewValue());
+                ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).setDateOfBirth(cellEditing.getNewValue());
 
-                dbdao.updateEmployeeInfo(viewFactory.getDbManager().getDBConnection(),
+                employeeDAO.updateEmployeeInfo(viewFactory.getDbManager().getDBConnection(),
                         ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getId(),
                         ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getFullname(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPhoneNumber(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getDateOfBirth(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getAddress(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPosition()
+                );
+            }
+        });
+    }
+
+    private void editAddressCell(){
+        columnAddress.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnAddress.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Employee, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Employee, String> cellEditing) {
+                ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).setAddress(cellEditing.getNewValue());
+
+                employeeDAO.updateEmployeeInfo(viewFactory.getDbManager().getDBConnection(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getId(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getFullname(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getDateOfBirth(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getAddress(),
                         ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPosition()
                 );
             }
@@ -149,10 +175,11 @@ public class EmployeeWindowController extends BaseController implements Initiali
             public void handle(TableColumn.CellEditEvent<Employee, String> cellEditing) {
                 ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).setFullname(cellEditing.getNewValue());
 
-                dbdao.updateEmployeeInfo(viewFactory.getDbManager().getDBConnection(),
+                employeeDAO.updateEmployeeInfo(viewFactory.getDbManager().getDBConnection(),
                         ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getId(),
                         ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getFullname(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPhoneNumber(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getDateOfBirth(),
+                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getAddress(),
                         ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPosition()
                 );
             }

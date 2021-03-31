@@ -5,7 +5,6 @@
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1">
     <children>
         <MenuBar AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -21,9 +20,10 @@
                         <MenuItem mnemonicParsing="false" text="Close" />
                     </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Staff Manament">
+                <Menu mnemonicParsing="false" text="Employee Manament">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Close" />
+                        <MenuItem mnemonicParsing="false" onAction="#menuEmployeeListAction" text="Employee List" />
+                  <MenuItem mnemonicParsing="false" text="Close" />
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Help">
@@ -35,4 +35,3 @@
         </MenuBar>
     </children>
 </AnchorPane>
-

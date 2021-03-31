@@ -8,9 +8,23 @@ public class Employee {
 
     private SimpleIntegerProperty ID;
     private SimpleStringProperty fullname;
-    private SimpleStringProperty phoneNumber;
+    private SimpleStringProperty dateOfBirth;
+    private SimpleStringProperty address;
     private SimpleStringProperty position;
+
     private CheckBox select;
+
+    public String getAddress() {
+        return address.get();
+    }
+
+    public SimpleStringProperty addressProperty() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address.set(address);
+    }
 
     public CheckBox getSelect() {
         return select;
@@ -24,8 +38,8 @@ public class Employee {
         this.fullname.set(fullname);
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber.set(phoneNumber);
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth.set(dateOfBirth);
     }
 
     public void setPosition(String position) {
@@ -52,12 +66,12 @@ public class Employee {
         return fullname;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber.get();
+    public String getDateOfBirth() {
+        return dateOfBirth.get();
     }
 
-    public SimpleStringProperty phoneNumberProperty() {
-        return phoneNumber;
+    public SimpleStringProperty dateOfBirthProperty() {
+        return dateOfBirth;
     }
 
     public String getPosition() {
@@ -68,11 +82,12 @@ public class Employee {
         return position;
     }
 
-    public Employee(int id, String fullname, String phoneNumber, String position, CheckBox checkBox) {
-        this.ID = new SimpleIntegerProperty(id);
+    public Employee(Integer ID, String fullname, String dateofbirth, String address, String position, CheckBox select) {
+        this.ID = new SimpleIntegerProperty(ID);
         this.fullname = new SimpleStringProperty(fullname);
-        this.phoneNumber = new SimpleStringProperty(phoneNumber);
+        this.dateOfBirth = new SimpleStringProperty(dateofbirth);
+        this.address = new SimpleStringProperty(address);
         this.position = new SimpleStringProperty(position);
-        this.select = checkBox;
+        this.select = select;
     }
 }

@@ -17,4 +17,9 @@ public class MainWindowController extends BaseController{
         System.out.println(TAG + "::menuOptionAction()");
         viewFactory.showOptionWindow();
     }
+
+    @FXML
+    void menuEmployeeListAction(ActionEvent event) {
+        viewFactory.showEmployeeWindow();
+    }
 }
