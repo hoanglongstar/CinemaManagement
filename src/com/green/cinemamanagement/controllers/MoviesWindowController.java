@@ -22,7 +22,7 @@ import javafx.util.converter.IntegerStringConverter;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MoviesWindowController extends BaseController implements Initializable {
+public class MoviesWindowController extends BaseController implements Initializable, AddMovieController.onMovieAdded {
 
     private ObservableList<Movies> data = FXCollections.observableArrayList();
     MovieDAO movieDAO = new MovieDAO();
@@ -58,20 +58,19 @@ public class MoviesWindowController extends BaseController implements Initializa
         super(viewFactory, fxmlName);
     }
 
-    public interface MovieWindowDelegate{
-        void addNewMovie();
-    }
-
-//    public MovieWindowDelegate delegate;
-//
-//    public MoviesWindowController(MovieWindowDelegate delegate){
-//        super();
-//        this.delegate = delegate;
-//    }
-
     @FXML
     void buttonAddMovieClicked(ActionEvent event) {
+        viewFactory.showAddMoviesWindow();
+//        AddMovieController addMovie = new AddMovieController(viewFactory, getFxmlName());
+//        addMovie.setOnListener(this);
+//        addMovie.addMovie();
+    }
 
+    @Override
+    public void result(String title, String genre, String releaseDate, Integer runningTime) {
+        movieDAO.insertMovie(viewFactory.getDbManager().getDBConnection(),title, genre, releaseDate, runningTime);
+        data.setAll(movieDAO.moviesList(viewFactory.getDbManager().getDBConnection()));
+        printDataFromDBToTableView();
     }
 
     @FXML
@@ -81,9 +80,12 @@ public class MoviesWindowController extends BaseController implements Initializa
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        AddMovieController addMovie = new AddMovieController(getViewFactory(), getFxmlName());
+        addMovie.setOnListener(this);
 
         data.setAll(movieDAO.moviesList(viewFactory.getDbManager().getDBConnection()));
         printDataFromDBToTableView();
+
     }
 
     private void printDataFromDBToTableView(){
@@ -168,4 +170,6 @@ public class MoviesWindowController extends BaseController implements Initializa
             }
         });
     }
+
+
 }

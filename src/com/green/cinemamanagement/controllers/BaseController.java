@@ -11,6 +11,10 @@ public class BaseController {
         this.viewFactory = viewFactory;
     }
 
+    public ViewFactory getViewFactory() {
+        return viewFactory;
+    }
+
     public String getFxmlName() {
         return fxmlName;
     }
