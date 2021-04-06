@@ -11,7 +11,7 @@ public class MovieDAO {
     private static final String QUERY_MOVIES_INFO = "SELECT * FROM MOVIES";
     private static final String UPDATE_MOVIE_INFO = "UPDATE MOVIES SET TITLE = ?, GENRE = ?, RELEASEDATE = ?, RUNNINGTIME = ? " + "WHERE IDMOVIE = ? ";
     private static final String INSERT_MOVIE = "INSERT INTO MOVIES(TITLE, GENRE, RELEASEDATE, RUNNINGTIME) VALUE(?,?,?,?)";
-    private static final String DELETE_MOVIE = "DELETE FROM WHERE ID = ?";
+    private static final String DELETE_MOVIE = "DELETE FROM MOVIES WHERE IDMOVIE = ?";
 
     public ArrayList<Movies> moviesList(Connection connection){
 

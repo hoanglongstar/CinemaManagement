@@ -17,12 +17,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MoviesWindowController extends BaseController implements Initializable, AddMovieController.onMovieAdded {
+public class MoviesWindowController extends BaseController implements Initializable, AddMovieController.IAddMovieController {
 
     private ObservableList<Movies> data = FXCollections.observableArrayList();
     MovieDAO movieDAO = new MovieDAO();
@@ -60,29 +61,24 @@ public class MoviesWindowController extends BaseController implements Initializa
 
     @FXML
     void buttonAddMovieClicked(ActionEvent event) {
-        viewFactory.showAddMoviesWindow();
-//        AddMovieController addMovie = new AddMovieController(viewFactory, getFxmlName());
-//        addMovie.setOnListener(this);
-//        addMovie.addMovie();
-    }
-
-    @Override
-    public void result(String title, String genre, String releaseDate, Integer runningTime) {
-        movieDAO.insertMovie(viewFactory.getDbManager().getDBConnection(),title, genre, releaseDate, runningTime);
-        data.setAll(movieDAO.moviesList(viewFactory.getDbManager().getDBConnection()));
-        printDataFromDBToTableView();
+        viewFactory.showAddMoviesWindow(this);
     }
 
     @FXML
     void buttonDeleteMovieClicked(ActionEvent event) {
+        ObservableList<Movies> movieRemoveList = FXCollections.observableArrayList();
 
+        for(Movies movies : data){
+            if(movies.getSelect().isSelected()){
+                movieRemoveList.add(movies);
+                movieDAO.deleteMovie(viewFactory.getDbManager().getDBConnection(), movies.getIDMovie());
+            }
+        }
+        data.removeAll(movieRemoveList);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        AddMovieController addMovie = new AddMovieController(getViewFactory(), getFxmlName());
-        addMovie.setOnListener(this);
-
         data.setAll(movieDAO.moviesList(viewFactory.getDbManager().getDBConnection()));
         printDataFromDBToTableView();
 
@@ -146,12 +142,12 @@ public class MoviesWindowController extends BaseController implements Initializa
         columnReleaseDate.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Movies, String>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<Movies, String> cellEditing) {
-                cellEditing.getRowValue().setReleaseDate(cellEditing.getNewValue());
+//                cellEditing.getRowValue().setReleaseDate(cellEditing.getNewValue());
 
-                movieDAO.updateMovieInfo(viewFactory.getDbManager().getDBConnection(),
-                        cellEditing.getRowValue().getIDMovie(), cellEditing.getRowValue().getTitle(),
-                        cellEditing.getRowValue().getGenre(), cellEditing.getRowValue().getReleaseDate(),
-                        cellEditing.getRowValue().getRunningTime());
+//                movieDAO.updateMovieInfo(viewFactory.getDbManager().getDBConnection(),
+//                        cellEditing.getRowValue().getIDMovie(), cellEditing.getRowValue().getTitle(),
+//                        cellEditing.getRowValue().getGenre(), cellEditing.getRowValue().getReleaseDate(),
+//                        cellEditing.getRowValue().getRunningTime());
             }
         });
     }
@@ -161,8 +157,7 @@ public class MoviesWindowController extends BaseController implements Initializa
         columnRunningTime.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Movies, Integer>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<Movies, Integer> cellEditing) {
-                cellEditing.getRowValue().setRunningTime(cellEditing.getNewValue());
-
+//                cellEditing.getRowValue().setRunningTime(cellEditing.getNewValue());
                 movieDAO.updateMovieInfo(viewFactory.getDbManager().getDBConnection(),
                         cellEditing.getRowValue().getIDMovie(), cellEditing.getRowValue().getTitle(),
                         cellEditing.getRowValue().getGenre(), cellEditing.getRowValue().getReleaseDate(),
@@ -172,4 +167,10 @@ public class MoviesWindowController extends BaseController implements Initializa
     }
 
 
+    @Override
+    public void onMovieAdded(Movies movies) {
+        movieDAO.insertMovie(viewFactory.getDbManager().getDBConnection(), movies.getTitle(), movies.getGenre(), movies.getReleaseDate(), movies.getRunningTime());
+        data.setAll(movieDAO.moviesList(viewFactory.getDbManager().getDBConnection()));
+        printDataFromDBToTableView();
+    }
 }

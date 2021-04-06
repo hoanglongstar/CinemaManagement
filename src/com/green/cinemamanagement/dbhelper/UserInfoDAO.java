@@ -2,13 +2,10 @@ package com.green.cinemamanagement.dbhelper;
 
 import com.green.cinemamanagement.models.UserInfo;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
-public class UserLoginDAO {
-    private static final String QUERY_USER_LOGIN_INFO = "SELECT * FROM USERLOGIN";
+public class UserInfoDAO {
+    private static final String QUERY_USER_LOGIN_INFO = "SELECT * FROM USERINFO WHERE EMAIL = ";
 
     public Boolean checkUserInfo(Connection connection, UserInfo userInfo){
 
@@ -16,7 +13,7 @@ public class UserLoginDAO {
         Boolean logInSuccess = false;
         try {
             statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(QUERY_USER_LOGIN_INFO);
+            ResultSet resultSet = statement.executeQuery(QUERY_USER_LOGIN_INFO + '\'' + userInfo.getUsername() + '\'');
             while(resultSet.next()){
 //                System.out.println(resultSet.getString(2));
                 if(userInfo.getUsername().equals(resultSet.getString(2))

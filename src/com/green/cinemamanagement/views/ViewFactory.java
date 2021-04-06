@@ -62,8 +62,8 @@ public class ViewFactory {
         initializeStage(controller);
     }
 
-    public void showAddMoviesWindow(){
-        BaseController controller = new AddMovieController(this, "AddMovieWindow.fxml");
+    public void showAddMoviesWindow(AddMovieController.IAddMovieController listener){
+        BaseController controller = new AddMovieController(this, "AddMovieWindow.fxml", listener);
         initializeStage(controller,true);
     }
 

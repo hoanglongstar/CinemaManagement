@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
@@ -15,6 +16,13 @@ import java.util.ResourceBundle;
 import java.util.Stack;
 
 public class AddMovieController extends BaseController {
+
+    public interface IAddMovieController{
+        void onMovieAdded(Movies movies);
+    }
+
+    public IAddMovieController listener;
+
     @FXML
     private TextField textFieldTitle;
 
@@ -33,42 +41,27 @@ public class AddMovieController extends BaseController {
     @FXML
     private Button buttonOK;
 
-    public onMovieAdded listener;
-
-    public void setOnListener(onMovieAdded listener){
-        this.listener = listener;
-//        listener.result(textFieldTitle.getText(),textFieldGenre.getText(), textFieldReleaseDate.getText(), Integer.valueOf(textFieldRunningTime.getText()));
-    }
-
     public AddMovieController(ViewFactory viewFactory, String fxmlName) {
         super(viewFactory, fxmlName);
     }
 
-    @FXML
-    void buttonCancelAddMovieClicked(ActionEvent event) {
-
+    public AddMovieController(ViewFactory viewFactory, String fxmlName, IAddMovieController listener) {
+        super(viewFactory, fxmlName);
+        this.listener = listener;
     }
 
     @FXML
     void buttonOKAddMovieClicked(ActionEvent event) {
-        listener.result(textFieldTitle.getText(),textFieldGenre.getText(), textFieldReleaseDate.getText(), Integer.valueOf(textFieldRunningTime.getText()));
+        if(listener != null){
+            listener.onMovieAdded(new Movies(0, textFieldTitle.getText(), textFieldGenre.getText(), textFieldReleaseDate.getText(),Integer.valueOf(textFieldRunningTime.getText()), new CheckBox()));
+            Stage stage = (Stage) buttonCancel.getScene().getWindow();
+            stage.close();
+        }
     }
 
-//    @Override
-//    public void initialize(URL url, ResourceBundle resourceBundle) {
-//        Stage stage = (Stage) textFieldGenre.getScene().getWindow();
-//        stage.showAndWait();
-//    }
-
-    public interface onMovieAdded{
-        void result(String title, String genre, String releaseDate, Integer runningTime);
-    }
-
-
-
-
-
-    public void addMovie(){
-        listener.result(textFieldTitle.getText(),textFieldGenre.getText(), textFieldReleaseDate.getText(), Integer.valueOf(textFieldRunningTime.getText()));
+    @FXML
+    void buttonCancelAddMovieClicked(ActionEvent event) {
+        Stage stage = (Stage) buttonCancel.getScene().getWindow();
+        stage.close();
     }
 }
