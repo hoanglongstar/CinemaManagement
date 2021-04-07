@@ -8,6 +8,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class AddEmployeeController extends BaseController{
 
     @FXML
@@ -41,7 +45,7 @@ public class AddEmployeeController extends BaseController{
     void buttonOKClicked(ActionEvent event) {
 
         EmployeeDAO employeeDAO = new EmployeeDAO();
-        employeeDAO.insertEmployee(viewFactory.getDbManager().getDBConnection(), textFieldFullname.getText(), textFieldDateOfBirth.getText(), textFieldAddress.getText(), textFieldPosition.getText());
+        employeeDAO.insertEmployee(viewFactory.getDbManager().getDBConnection(), textFieldFullname.getText(),textFieldDateOfBirth.getText(), textFieldAddress.getText(), textFieldPosition.getText());
         windowIsClosed = true;
         Stage stage = (Stage) buttonCancel.getScene().getWindow();
         viewFactory.closeStage(stage);
@@ -55,5 +59,4 @@ public class AddEmployeeController extends BaseController{
     public static Boolean getWindowIsClosed(){
         return windowIsClosed;
     }
-
 }

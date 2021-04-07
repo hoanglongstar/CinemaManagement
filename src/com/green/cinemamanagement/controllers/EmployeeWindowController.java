@@ -13,8 +13,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.TableColumn;
+import javafx.util.converter.DateStringConverter;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class EmployeeWindowController extends BaseController implements Initializable {
@@ -122,11 +124,11 @@ public class EmployeeWindowController extends BaseController implements Initiali
                 ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).setPosition(cellEditing.getNewValue());
 
                 employeeDAO.updateEmployeeInfo(viewFactory.getDbManager().getDBConnection(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getId(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getFullname(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getDateOfBirth(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getAddress(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPosition()
+                        cellEditing.getRowValue().getId(),
+                        cellEditing.getRowValue().getFullname(),
+                        cellEditing.getRowValue().getDateOfBirth(),
+                        cellEditing.getRowValue().getAddress(),
+                        cellEditing.getRowValue().getPosition()
                 );
             }
         });
@@ -140,11 +142,11 @@ public class EmployeeWindowController extends BaseController implements Initiali
                 ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).setDateOfBirth(cellEditing.getNewValue());
 
                 employeeDAO.updateEmployeeInfo(viewFactory.getDbManager().getDBConnection(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getId(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getFullname(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getDateOfBirth(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getAddress(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPosition()
+                        cellEditing.getRowValue().getId(),
+                        cellEditing.getRowValue().getFullname(),
+                        cellEditing.getRowValue().getDateOfBirth(),
+                        cellEditing.getRowValue().getAddress(),
+                        cellEditing.getRowValue().getPosition()
                 );
             }
         });
@@ -158,11 +160,11 @@ public class EmployeeWindowController extends BaseController implements Initiali
                 ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).setAddress(cellEditing.getNewValue());
 
                 employeeDAO.updateEmployeeInfo(viewFactory.getDbManager().getDBConnection(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getId(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getFullname(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getDateOfBirth(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getAddress(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPosition()
+                        cellEditing.getRowValue().getId(),
+                        cellEditing.getRowValue().getFullname(),
+                        cellEditing.getRowValue().getDateOfBirth(),
+                        cellEditing.getRowValue().getAddress(),
+                        cellEditing.getRowValue().getPosition()
                 );
             }
         });
@@ -176,11 +178,11 @@ public class EmployeeWindowController extends BaseController implements Initiali
                 ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).setFullname(cellEditing.getNewValue());
 
                 employeeDAO.updateEmployeeInfo(viewFactory.getDbManager().getDBConnection(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getId(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getFullname(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getDateOfBirth(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getAddress(),
-                        ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).getPosition()
+                        cellEditing.getRowValue().getId(),
+                        cellEditing.getRowValue().getFullname(),
+                        cellEditing.getRowValue().getDateOfBirth(),
+                        cellEditing.getRowValue().getAddress(),
+                        cellEditing.getRowValue().getPosition()
                 );
             }
         });

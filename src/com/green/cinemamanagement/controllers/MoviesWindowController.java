@@ -142,12 +142,12 @@ public class MoviesWindowController extends BaseController implements Initializa
         columnReleaseDate.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Movies, String>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<Movies, String> cellEditing) {
-//                cellEditing.getRowValue().setReleaseDate(cellEditing.getNewValue());
+                cellEditing.getRowValue().setReleaseDate(cellEditing.getNewValue());
 
-//                movieDAO.updateMovieInfo(viewFactory.getDbManager().getDBConnection(),
-//                        cellEditing.getRowValue().getIDMovie(), cellEditing.getRowValue().getTitle(),
-//                        cellEditing.getRowValue().getGenre(), cellEditing.getRowValue().getReleaseDate(),
-//                        cellEditing.getRowValue().getRunningTime());
+                movieDAO.updateMovieInfo(viewFactory.getDbManager().getDBConnection(),
+                        cellEditing.getRowValue().getIDMovie(), cellEditing.getRowValue().getTitle(),
+                        cellEditing.getRowValue().getGenre(), cellEditing.getRowValue().getReleaseDate(),
+                        cellEditing.getRowValue().getRunningTime());
             }
         });
     }
@@ -157,7 +157,7 @@ public class MoviesWindowController extends BaseController implements Initializa
         columnRunningTime.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Movies, Integer>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<Movies, Integer> cellEditing) {
-//                cellEditing.getRowValue().setRunningTime(cellEditing.getNewValue());
+                cellEditing.getRowValue().setRunningTime(cellEditing.getNewValue());
                 movieDAO.updateMovieInfo(viewFactory.getDbManager().getDBConnection(),
                         cellEditing.getRowValue().getIDMovie(), cellEditing.getRowValue().getTitle(),
                         cellEditing.getRowValue().getGenre(), cellEditing.getRowValue().getReleaseDate(),
@@ -165,7 +165,6 @@ public class MoviesWindowController extends BaseController implements Initializa
             }
         });
     }
-
 
     @Override
     public void onMovieAdded(Movies movies) {

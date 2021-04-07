@@ -1,6 +1,7 @@
 package com.green.cinemamanagement.controllers;
 
 import com.green.cinemamanagement.dbhelper.UserInfoDAO;
+import com.green.cinemamanagement.instances.Announcements;
 import com.green.cinemamanagement.models.UserInfo;
 import com.green.cinemamanagement.views.ViewFactory;
 import javafx.event.ActionEvent;
@@ -33,13 +34,13 @@ public class LoginWindowController  extends BaseController{
         UserInfoDAO userInfoDAO = new UserInfoDAO();
 
         if(userInfo.getUsername().equals("")){
-            showAlert("Please enter email!");
+            showAlert(Announcements.EMAIL_IS_NOT_ENTERED);
         } else if(userInfoDAO.checkUserInfo(viewFactory.getDbManager().getDBConnection(), userInfo)){
             viewFactory.showMainWindow();
             Stage stage = (Stage) buttonLogin.getScene().getWindow();
             viewFactory.closeStage(stage);
         } else {
-            labelLoginStatus.setText("Password is incorrect!");
+            labelLoginStatus.setText(Announcements.WRONG_PASSWORD);
         }
     }
 
