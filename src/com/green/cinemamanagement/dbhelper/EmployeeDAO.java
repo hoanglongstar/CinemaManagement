@@ -1,12 +1,10 @@
 package com.green.cinemamanagement.dbhelper;
 
 import com.green.cinemamanagement.models.Employee;
-import com.green.cinemamanagement.models.UserInfo;
 import javafx.scene.control.CheckBox;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class EmployeeDAO {
 
@@ -28,7 +26,7 @@ public class EmployeeDAO {
             ResultSet resultSet = statement.executeQuery(QUERY_EMPLOYEE_INFO);
 
             while (resultSet.next()){
-                employees.add(new Employee(resultSet.getInt(1),resultSet.getString(2), resultSet.getString(3) , resultSet.getString(4), resultSet.getString(5), new CheckBox()));
+                employees.add(new Employee(resultSet.getInt(1),resultSet.getString(2), resultSet.getDate(3) , resultSet.getString(4), resultSet.getString(5), new CheckBox()));
             }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -53,14 +51,14 @@ public class EmployeeDAO {
         }
     }
 
-    public void updateEmployeeInfo(Connection connection, Integer id, String fullname, String dateofbirth, String address, String position){
+    public void updateEmployeeInfo(Connection connection, Integer id, String fullname, Date dateofbirth, String address, String position){
 
         PreparedStatement preparedStatement = null;
 
         try {
             preparedStatement = connection.prepareStatement(UPDATE_EMPLOYEE_INFO);
             preparedStatement.setString(1, fullname);
-            preparedStatement.setString(2, dateofbirth);
+            preparedStatement.setDate(2, dateofbirth);
             preparedStatement.setString(3, address);
             preparedStatement.setString(4, position);
             preparedStatement.setInt(5, id);

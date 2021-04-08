@@ -1,5 +1,7 @@
 package com.green.cinemamanagement.controllers;
 
+import com.green.cinemamanagement.customcell.DateEditingCell;
+import com.green.cinemamanagement.customcell.PositionEditingCell;
 import com.green.cinemamanagement.dbhelper.EmployeeDAO;
 import com.green.cinemamanagement.models.Employee;
 import com.green.cinemamanagement.views.ViewFactory;
@@ -9,11 +11,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.control.TableColumn;
-import javafx.util.converter.DateStringConverter;
 
 import java.net.URL;
 import java.util.Date;
@@ -34,7 +37,7 @@ public class EmployeeWindowController extends BaseController implements Initiali
     private TableColumn<Employee, String> columnFullname;
 
     @FXML
-    private TableColumn<Employee, String> columnDateOfBirth;
+    private TableColumn<Employee, Date> columnDateOfBirth;
 
     @FXML
     private TableColumn<Employee, String> columnAddress;
@@ -101,7 +104,9 @@ public class EmployeeWindowController extends BaseController implements Initiali
         columnFullname.setCellValueFactory(new PropertyValueFactory<>("fullname"));
         editFullnameCell();
 
+
         columnDateOfBirth.setCellValueFactory(new PropertyValueFactory<>("dateOfBirth"));
+//        columnDateOfBirth.setCellValueFactory(cellData -> cellData.getValue().dateOfBirthProperty());
         editDateOfBirthCell();
 
         columnAddress.setCellValueFactory(new PropertyValueFactory<>("address"));
@@ -117,7 +122,8 @@ public class EmployeeWindowController extends BaseController implements Initiali
     }
 
     private void editPositionCell (){
-        columnPosition.setCellFactory(TextFieldTableCell.forTableColumn());
+        columnPosition.setCellValueFactory(cellData -> cellData.getValue().positionProperty());
+        columnPosition.setCellFactory(dataCellFactory -> new PositionEditingCell());
         columnPosition.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Employee, String>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<Employee, String> cellEditing) {
@@ -126,7 +132,7 @@ public class EmployeeWindowController extends BaseController implements Initiali
                 employeeDAO.updateEmployeeInfo(viewFactory.getDbManager().getDBConnection(),
                         cellEditing.getRowValue().getId(),
                         cellEditing.getRowValue().getFullname(),
-                        cellEditing.getRowValue().getDateOfBirth(),
+                        new java.sql.Date(cellEditing.getRowValue().getDateOfBirth().getTime()),
                         cellEditing.getRowValue().getAddress(),
                         cellEditing.getRowValue().getPosition()
                 );
@@ -135,16 +141,22 @@ public class EmployeeWindowController extends BaseController implements Initiali
     }
 
     private void editDateOfBirthCell(){
-        columnDateOfBirth.setCellFactory(TextFieldTableCell.forTableColumn());
-        columnDateOfBirth.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Employee, String>>() {
+//        Callback<TableColumn<Employee, Date>, TableCell<Employee, Date>> dateCellFactory =(TableColumn<Employee, Date> param) -> new DateEditingCell();
+//        columnDateOfBirth.setCellFactory(dateCellFactory);
+//        columnDateOfBirth.setOnEditCommit((TableColumn.CellEditEvent<Employee, Date> t) -> {
+//            ((Employee)t.getTableView().getItems().get(t.getTablePosition().getRow())).setDateOfBirth(t.getNewValue());
+//        });
+        columnDateOfBirth.setCellValueFactory(cellData -> cellData.getValue().dateOfBirthProperty());
+        columnDateOfBirth.setCellFactory(dataCellFactory -> new DateEditingCell());
+        columnDateOfBirth.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Employee, Date>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<Employee, String> cellEditing) {
+            public void handle(TableColumn.CellEditEvent<Employee, Date> cellEditing) {
                 ((Employee) cellEditing.getTableView().getItems().get(cellEditing.getTablePosition().getRow())).setDateOfBirth(cellEditing.getNewValue());
 
                 employeeDAO.updateEmployeeInfo(viewFactory.getDbManager().getDBConnection(),
                         cellEditing.getRowValue().getId(),
                         cellEditing.getRowValue().getFullname(),
-                        cellEditing.getRowValue().getDateOfBirth(),
+                        new java.sql.Date(cellEditing.getRowValue().getDateOfBirth().getTime()),
                         cellEditing.getRowValue().getAddress(),
                         cellEditing.getRowValue().getPosition()
                 );
@@ -162,7 +174,7 @@ public class EmployeeWindowController extends BaseController implements Initiali
                 employeeDAO.updateEmployeeInfo(viewFactory.getDbManager().getDBConnection(),
                         cellEditing.getRowValue().getId(),
                         cellEditing.getRowValue().getFullname(),
-                        cellEditing.getRowValue().getDateOfBirth(),
+                        new java.sql.Date(cellEditing.getRowValue().getDateOfBirth().getTime()),
                         cellEditing.getRowValue().getAddress(),
                         cellEditing.getRowValue().getPosition()
                 );
@@ -180,7 +192,7 @@ public class EmployeeWindowController extends BaseController implements Initiali
                 employeeDAO.updateEmployeeInfo(viewFactory.getDbManager().getDBConnection(),
                         cellEditing.getRowValue().getId(),
                         cellEditing.getRowValue().getFullname(),
-                        cellEditing.getRowValue().getDateOfBirth(),
+                        new java.sql.Date(cellEditing.getRowValue().getDateOfBirth().getTime()),
                         cellEditing.getRowValue().getAddress(),
                         cellEditing.getRowValue().getPosition()
                 );

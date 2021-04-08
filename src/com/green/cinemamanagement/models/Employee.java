@@ -1,6 +1,7 @@
 package com.green.cinemamanagement.models;
 
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.CheckBox;
 
@@ -10,24 +11,56 @@ public class Employee {
 
     private SimpleIntegerProperty ID;
     private SimpleStringProperty fullname;
-    private SimpleStringProperty dateOfBirth;
+    private SimpleObjectProperty<Date> dateOfBirth;
     private SimpleStringProperty address;
     private SimpleStringProperty position;
 
 //    public Date getDateOfBirth() {
 
+//    public LocalDate getDateOfBirth() {
+//        return dateOfBirth.get();
+//    }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth.get();
     }
 
-    public SimpleStringProperty dateOfBirthProperty() {
-        return dateOfBirth;
+    public SimpleObjectProperty<Date> dateOfBirthProperty() {
+        return this.dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth.set(dateOfBirth);
     }
+//
+//    public SimpleObjectProperty<LocalDate> dateOfBirthProperty() {
+//        return dateOfBirth;
+//    }
+//
+//    public void setDateOfBirth(LocalDate dateOfBirth) {
+//        this.dateOfBirth.set(dateOfBirth);
+//    }
+
+//    public Date getDateOfBirth() {
+//        return dateOfBirth;
+//    }
+//
+//    public void setDateOfBirth(Date dateOfBirth) {
+//        this.dateOfBirth = dateOfBirth;
+//    }
+
+
+//    public String getDateOfBirth() {
+//        return dateOfBirth.get();
+//    }
+//
+//    public SimpleStringProperty dateOfBirthProperty() {
+//        return dateOfBirth;
+//    }
+//
+//    public void setDateOfBirth(String dateOfBirth) {
+//        this.dateOfBirth.set(dateOfBirth);
+//    }
 //        return dateOfBirth;
 //    }
 //
@@ -113,10 +146,10 @@ public class Employee {
         return position;
     }
 
-    public Employee(Integer ID, String fullname, String dateofbirth, String address, String position, CheckBox select) {
+    public Employee(Integer ID, String fullname, Date dateOfBirth, String address, String position, CheckBox select) {
         this.ID = new SimpleIntegerProperty(ID);
         this.fullname = new SimpleStringProperty(fullname);
-        this.dateOfBirth = new SimpleStringProperty(dateofbirth);
+        this.dateOfBirth = new SimpleObjectProperty(dateOfBirth);
         this.address = new SimpleStringProperty(address);
         this.position = new SimpleStringProperty(position);
         this.select = select;

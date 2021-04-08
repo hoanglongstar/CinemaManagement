@@ -6,4 +6,5 @@ module CinemaManagement {
     opens com.green.cinemamanagement;
     opens com.green.cinemamanagement.controllers;
     opens com.green.cinemamanagement.models;
+    opens com.green.cinemamanagement.instances;
 }

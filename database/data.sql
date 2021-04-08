@@ -5,7 +5,7 @@ use cinemamanagement;
 create table employeeinfo(
 	id int not null primary key auto_increment,
     fullname nvarchar(30) not null,
-    dateofbirth nvarchar(10) not null,
+    dateofbirth date not null,
     address nvarchar(50) not null,
     position nvarchar(30) not null
 );
@@ -25,10 +25,10 @@ create table movies(
 );
 
 insert into employeeinfo(`fullname`, `dateofbirth`, `address`, `position`) values
-('Nguyen Tuan Tu', '03/08/1995', 'TPHCM', 'manager'),
-('Tran Hoang Khanh', '26/09/1999', 'TPHCM', 'staff'),
-('Nguyen Tuong Van', '19/12/2000', 'Binh Duong', 'staff'),
-('Huynh Huu Nhan', '30/12/2000', 'TPHCM', 'staff');
+('Nguyen Tuan Tu', '1995-08-30', 'TPHCM', 'manager'),
+('Tran Hoang Khanh', '1995-08-30', 'TPHCM', 'staff'),
+('Nguyen Tuong Van', '1995-08-30', 'Binh Duong', 'staff'),
+('Huynh Huu Nhan', '1995-08-30', 'TPHCM', 'staff');
 
 insert into userlogin(email, password) values
 ('tunguyen@gmail.com','123456'),

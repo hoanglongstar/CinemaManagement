@@ -18,7 +18,7 @@
             <columns>
                 <TableColumn fx:id="columnID" prefWidth="32.0" text="ID" />
                 <TableColumn fx:id="columnFullname" prefWidth="117.0" text="Fullname" />
-                <TableColumn fx:id="columnDateOfBirth" prefWidth="105.0" text="Date of Birth" />
+                <TableColumn fx:id="columnDateOfBirth" minWidth="105.0" prefWidth="105.0" text="Date of Birth" />
             <TableColumn fx:id="columnAddress" prefWidth="105.0" text="Address" />
                 <TableColumn fx:id="columnPosition" prefWidth="112.0" text="Position" />
                 <TableColumn fx:id="columnSelect" prefWidth="108.0" text="Select" />
